@@ -7,7 +7,7 @@ import path from 'path';
 dotenv.config();
 
 // Retrieve your initiator password from your .env file.
-const initiatorPassword = process.env.MPESA_INITIATOR; 
+const initiatorPassword = process.env.INITIATOR_PASSWORD; 
 
 // Get the absolute path to your PEM file.
 // Assuming the file "mpesa_public_key.cer" is in the same directory as this script.
