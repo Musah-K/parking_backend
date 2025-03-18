@@ -18,15 +18,31 @@ import configPassport from './config/passport.js';
 
 config();
 const app = express();
-app.use(cors({
-    origin: 'http://localhost:3000',
+
+const allowedOrigins = [
+    'https://parking-frontend-omega.vercel.app',
+    'https://parking-frontend-moses-projects-c2d7a1b8.vercel.app',
+    'https://parking-frontend-git-main-moses-projects-c2d7a1b8.vercel.app',
+    'http://localhost:3000',
+  ];
+  const corsOptions = {
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
-}))
+  };
+  
+  app.use(cors(corsOptions));  
 
 const httpServer = http.createServer(app);
 
 const mongoSessionStore = ConnectMongo(session);
 configPassport();
+
 // Connecting Passport to mongo db session store ****
 
 const store = new mongoSessionStore({
@@ -44,6 +60,7 @@ app.use(session({
     cookie:{
         maxAge: 1000*60*60*24,
         httpOnly: true,
+        secure: true
     }
 }));
 
