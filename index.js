@@ -20,6 +20,7 @@ config();
 const app = express();
 
 const allowedOrigins = [
+    'https://parkingfrontend-production.up.railway.app',
     'https://parking-frontend-omega.vercel.app',
     'https://parking-frontend-moses-projects-c2d7a1b8.vercel.app',
     'https://parking-frontend-git-main-moses-projects-c2d7a1b8.vercel.app',
