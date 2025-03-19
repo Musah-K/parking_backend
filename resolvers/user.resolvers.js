@@ -116,19 +116,35 @@ const userResolvers = {
             }
         },
 
-        logout: async(_,__,context)=>{
+        logout: async (_, __, context) => {
             try {
-                context.logout();
-                context.req.session.destroy(err=>{
-                    if(err) throw new Error(err.message);
-                } );
-                context.res.clearCookie("connect.sid");
-
-                return {message:"User logged out successfully"};
+              // Use the callback form of logout to allow Passport to finish its work.
+              await new Promise((resolve, reject) => {
+                // Check if req.session exists before calling logout
+                if (context.req.session) {
+                  context.req.logout((err) => {
+                    if (err) return reject(new Error(err.message));
+                    // Now safely destroy the session if it exists
+                    context.req.session.destroy((err) => {
+                      if (err) return reject(new Error(err.message));
+                      // Clear the session cookie
+                      context.res.clearCookie("connect.sid");
+                      resolve();
+                    });
+                  });
+                } else {
+                  // If there is no session, just clear the cookie.
+                  context.res.clearCookie("connect.sid");
+                  resolve();
+                }
+              });
+          
+              return { message: "User logged out successfully" };
             } catch (error) {
-                throw new Error(error.message);
+              throw new Error(error.message);
             }
-        },
+          },
+          
     }
 };
 

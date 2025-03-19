@@ -21,7 +21,7 @@ const app = express();
 app.set('trust proxy', 1);
 
 const allowedOrigins = [
-  'http://localhost:3001',
+  'http://localhost:3000',
     'https://parkingfrontend-production.up.railway.app',
     'https://parking-frontend-omega.vercel.app',
     'https://parking-frontend-moses-projects-c2d7a1b8.vercel.app',
@@ -85,9 +85,9 @@ await server.start();
 
 app.use('/graphql', express.json(), expressMiddleware(server,{context:({req,res})=>buildContext({req,res}),}));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 await new Promise((resolve) => httpServer.listen(PORT, '0.0.0.0', resolve));
 
 await connectDb();
 
-console.log('Server ready at:  http://localhost:3000/graphql');
+console.log('Server ready at:  http://localhost:3001/graphql');
