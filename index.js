@@ -20,11 +20,11 @@ config();
 const app = express();
 
 const allowedOrigins = [
+  'http://localhost:3001',
     'https://parkingfrontend-production.up.railway.app',
     'https://parking-frontend-omega.vercel.app',
     'https://parking-frontend-moses-projects-c2d7a1b8.vercel.app',
     'https://parking-frontend-git-main-moses-projects-c2d7a1b8.vercel.app',
-    'http://localhost:3000',
   ];
   const corsOptions = {
     origin: (origin, callback) => {
@@ -61,8 +61,8 @@ app.use(session({
     cookie:{
         maxAge: 1000*60*60*24,
         httpOnly: true,
-        sameSite: 'none',
-        secure: true
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     }
 }));
 
@@ -89,4 +89,4 @@ await new Promise((resolve) => httpServer.listen(PORT, '0.0.0.0', resolve));
 
 await connectDb();
 
-console.log('Server ready at:  http://localhost:7000/graphql');
+console.log('Server ready at:  http://localhost:3000/graphql');
