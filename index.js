@@ -22,6 +22,7 @@ app.set('trust proxy', 1);
 
 const allowedOrigins = [
   'http://localhost:3000',
+  'http://localhost:3001',
     'https://parkingfrontend-production.up.railway.app',
     'https://parking-frontend-omega.vercel.app',
     'https://parking-frontend-moses-projects-c2d7a1b8.vercel.app',

@@ -5,6 +5,7 @@ const parkingSlotSchema = mongoose.Schema({
     isAvailable:{type:Boolean,required:true, default:true},
     paymentId:{type:mongoose.Schema.Types.ObjectId,ref:"Payment"},
     bookedBy:{type:mongoose.Schema.Types.ObjectId,ref:"User"},
+    mpesa:{ String},
     validFrom:{type:Date},
     validTill:{type:Date},
 },{timestamps: true});

@@ -5,10 +5,11 @@ type ParkingSlot {
     slotNumber:Int!
     isAvailable:Boolean
     paymentId: ID
-    bookedBy:User!
+    bookedBy:User
     validFrom:String
     validTill:String
     createdAt:String!
+    mpesa: String
 }
 
 type Query {
@@ -40,6 +41,7 @@ input updateParkingSlotInput {
     bookedBy: ID
     validTill: String
     validFrom: String
+    mpesa: String
 }
 
 type deleteResponse {

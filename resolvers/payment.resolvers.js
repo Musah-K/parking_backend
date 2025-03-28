@@ -86,7 +86,7 @@ const paymentResolvers = {
 
 
       const { days,validFrom, validTill } = input;
-      const amount = days * 1;
+      const amount = days >= 30 ?days * 250 : days * 300;
       
       const phone = user.phone;
       console.log("User ID:", user._id);
@@ -100,7 +100,7 @@ const paymentResolvers = {
         throw new Error("STK Push failed. Please try again.");
       }
 
-      console.log("STK Push sent. Waiting for M-Pesa confirmation...");
+      // console.log("STK Push sent. Waiting for M-Pesa confirmation...");
 
       const maxRetries = 2;
       let retries = 0;
@@ -109,7 +109,7 @@ const paymentResolvers = {
       while (retries < maxRetries) {
         await sleep(6000);
         statusResponse = await checkMpesaStatus(stkResponse.CheckoutRequestID);
-        console.log(`Status Check ${retries + 1}:`, statusResponse);
+        // console.log(`Status Check ${retries + 1}:`, statusResponse);
 
         if (statusResponse && statusResponse.ResponseCode === "0") {
           console.log(true)
@@ -123,10 +123,10 @@ const paymentResolvers = {
       }
 
       const  mpesaReceipt = statusResponse.MpesaReceiptNumber || "TEST_RECEIPT";
-      console.log("Payment confirmed. Receipt:", mpesaReceipt);
+      // console.log("Payment confirmed. Receipt:", mpesaReceipt);
 
       try {
-        console.log('saving to db')
+        // console.log('saving to db')
         const newPayment = new Payment({
           user: user._id,
           amount,
@@ -148,7 +148,7 @@ const paymentResolvers = {
         return newPayment;
         
       } catch (error) {
-        console.error("Error saving payment to DB:", error);
+        // console.error("Error saving payment to DB:", error);
         throw new Error("Payment confirmed but failed to save to the database.");
         
       }

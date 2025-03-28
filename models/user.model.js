@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
     profilePic:{type:String},
     vehicle:{type:String, set: (value) => value.toUpperCase()},
     password:{type:String, required:true},
-    role:{type:String, required:true, enum:['user','admin', 'worker'], default:'user'},
+    role:{type:String, required:true, enum:['client','admin', 'worker'], default:'client'},
     admin:{type:Boolean, required:true, default:false},
 
 }, {timestamps:true});

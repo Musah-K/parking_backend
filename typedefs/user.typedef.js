@@ -2,7 +2,7 @@
 const userTypedef = `#graphql
 type User {
     _id:ID!
-    name:String!
+    name:String
     phone:Int!
     profilePic:String
     password:String!
@@ -21,8 +21,10 @@ type Query {
 
 type Mutation {
     createUser(input:createUserInput!): User
+    adminCreateUser(input:createUserInput!): User
     loginUser(input:loginUserInput!): User
     updateUser(_id:ID!,input:updateUserInput!): User
+    adminUpdateUser(input:adminUpdateUserInput!): User
     deleteUser(_id:ID!): User
     logout: logoutResponse!
 }
@@ -49,6 +51,17 @@ input updateUserInput {
     vehicle:String
     role:String
     admin:Boolean
+    oldPassword:String
+}
+input adminUpdateUserInput {
+    _id:ID!
+    name:String
+    phone:Int
+    profilePic:String
+    password:String
+    admin:Boolean
+    vehicle:String
+    role:String 
 }
 
 type logoutResponse {
